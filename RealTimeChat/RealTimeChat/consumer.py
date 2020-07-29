@@ -1,5 +1,6 @@
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
 from channels.consumer import AsyncConsumer
+import json
 import datetime
 from channels.layers import get_channel_layer
 
@@ -43,7 +44,7 @@ class Client(AsyncJsonWebsocketConsumer):
     async def send_group(self,content):
 
         # This method is called any time the command in the packet is a group message
-        
+
         receiver=content['receiver']
         await self.channel_layer.group_send(
             receiver,
@@ -52,6 +53,20 @@ class Client(AsyncJsonWebsocketConsumer):
             "message":content["message"],
             "date_sent":datetime.datetime.now()}
         )
+
+    async def fetch_timeTable(self,content):
+        
+        # This method is called anytime the command in the packet is a time table fetch command
+
+        self.send(text_data=json.dumps({"timetable":"timetable"}))
+
+    async def get_chats(self,user):
+        # This method is to receive recent chats, and can be called by the web version,desktop
+        # or mobile application to get chat of a specific user or group
+
+        # This method should return a csv or database file to the user containing recent chats
+        self.send(text_data="fetched data to binary")
+
 
 
 
