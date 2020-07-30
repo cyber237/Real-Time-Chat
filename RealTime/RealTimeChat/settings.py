@@ -56,7 +56,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION='RealTimeChat.wsgi.application'
+WSGI_APPLICATION ='RealTimeChat.wsgi.application'
 
 ASGI_APPLICATION = 'RealTimeChat.routing.application'
 
