@@ -4,7 +4,7 @@ import json
 import datetime
 from channels.layers import get_channel_layer
 
-class Client(AsyncJsonWebsocketConsumer):
+class BaseClient(AsyncJsonWebsocketConsumer):
     # class Client is our consumer for this connection
     # Tt manages the websocket connected to the server it also 
     # carries all methods we could apply to the connection
@@ -12,19 +12,20 @@ class Client(AsyncJsonWebsocketConsumer):
     async def websocket_connect(self):
         # the websocket connect method is called any time
         # a connection is initiated to the server during handshake
-
-        self.channel_name=self.scope['id']
+        self.channel_name=self.scope['url_route']['kwargs']['id']
         self.channel_layer=get_channel_layer()
+        # Authentication Here
+        self.channel_layer.group_add()
         await self.accept()
     
     async def receive_json(self,content):
 
         # This method is called anytime we recieve a packet from the connection
 
-        command=content["command"]
-        if command=="message.send.private":
+        command=content["type"]
+        if command=="send.private":
             await self.send_private(content["message"])
-        elif command=="message.send.group":
+        elif command=="send.group":
             await self.send_group(content['message'])
     
     async def send_private(self,content):
