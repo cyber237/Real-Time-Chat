@@ -14,7 +14,6 @@ class BaseClient(AsyncJsonWebsocketConsumer):
         # a connection is initiated to the server during handshake
         self.channel_name=str(self.scope['url_route']['kwargs']['id'])
         print(self.channel_name)
-        print("Trying...")
         # Authentication Here
         await self.accept()
         print("Connected...")
@@ -28,24 +27,27 @@ class BaseClient(AsyncJsonWebsocketConsumer):
             await self.send_private(content)
         elif command=="send.group":
             await self.send_group(content)
+        elif command=="chat.receive":
+            await self.chat_receive(content)
     
     async def send_private(self,content):
         # This method is called if the command of the packet received is a message to another user
         # we call it "private"
         receiver=content['receiver']
-        self.send(text_data=json.dumps(            {
-            "type" : "chat.message",
-            "receiver" :receiver,
-            "message":content["message"]}))
-            
+
         await self.channel_layer.send(
             self.channel_name,
             {
-            "type" : "chat.message",
+            "type" : "chat.receive",
             "receiver" :receiver,
             "message":content["message"]}
         )
         print("sent")
+
+    async def chat_receive(self,content):
+        await self.send(
+            text_data=json.dumps(content)
+        )
 
     
     async def send_group(self,content):
