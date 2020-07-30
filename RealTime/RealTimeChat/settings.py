@@ -54,7 +54,7 @@ TEMPLATES = [
     },
 ]
 
-ASGI_APPLICATION = 'RealTimeChat.routing.application'
+ASGI_APPLICATION = 'RealTime.routing.application'
 
 
 # Database
