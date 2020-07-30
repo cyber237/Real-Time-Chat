@@ -1,6 +1,6 @@
-from django.urls import URLPattern,path
+from django.urls import path
 from django.contrib import admin
 
-URLPattern=[
-    path('admin',admin)
+urlpatterns=[
+    path('admin/',admin.site.urls),
 ]

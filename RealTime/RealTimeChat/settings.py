@@ -15,7 +15,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-ROOT_URLONF='RealTimeChat.urls'
+ROOT_URLCONF='RealTimeChat.urls'
 
 
 # Application definition
