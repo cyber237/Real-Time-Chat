@@ -17,12 +17,10 @@ class BaseClient(AsyncJsonWebsocketConsumer):
         # Authentication Here
         await self.accept()
         await self.channel_layer.group_add(self.channel_group_name,self.channel_name)
-        print("Connected...")
     
     async def receive_json(self,content):
 
         # This method is called anytime we recieve a packet from the connection
-        print(content)
         command=content["type"]
         if command=="send.private":
             await self.send_private(content)
@@ -44,11 +42,8 @@ class BaseClient(AsyncJsonWebsocketConsumer):
             "receiver" :receiver,
             "message":content["message"]}
         )
-        print("sent")
 
     async def chat_receive(self,content):
-        print("received")
-        print(content)
         await self.send(
             text_data=json.dumps(content)
         )
