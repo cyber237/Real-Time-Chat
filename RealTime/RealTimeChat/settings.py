@@ -60,6 +60,11 @@ WSGI_APPLICATION ='RealTimeChat.wsgi.application'
 
 ASGI_APPLICATION = 'RealTimeChat.routing.application'
 
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    }
+}
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases

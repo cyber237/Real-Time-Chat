@@ -7,7 +7,7 @@ from . import consumer
 application=ProtocolTypeRouter({
     "websocket":AuthMiddlewareStack(
         URLRouter([
-            url(r'/^(?P<room_name>\w+)/$',consumer.BaseClient)
+            url(r'chat/(?P<id>\w+)/$',consumer.BaseClient)
         ])
     )
 })

@@ -9,37 +9,43 @@ class BaseClient(AsyncJsonWebsocketConsumer):
     # Tt manages the websocket connected to the server it also 
     # carries all methods we could apply to the connection
 
-    async def websocket_connect(self):
+    async def websocket_connect(self,loop):
         # the websocket connect method is called any time
         # a connection is initiated to the server during handshake
-        self.channel_name=self.scope['url_route']['kwargs']['id']
-        self.channel_layer=get_channel_layer()
+        self.channel_name=str(self.scope['url_route']['kwargs']['id'])
+        print(self.channel_name)
+        print("Trying...")
         # Authentication Here
-        self.channel_layer.group_add()
         await self.accept()
+        print("Connected...")
     
     async def receive_json(self,content):
 
         # This method is called anytime we recieve a packet from the connection
-
+        print(content)
         command=content["type"]
         if command=="send.private":
-            await self.send_private(content["message"])
+            await self.send_private(content)
         elif command=="send.group":
-            await self.send_group(content['message'])
+            await self.send_group(content)
     
     async def send_private(self,content):
         # This method is called if the command of the packet received is a message to another user
         # we call it "private"
         receiver=content['receiver']
+        self.send(text_data=json.dumps(            {
+            "type" : "chat.message",
+            "receiver" :receiver,
+            "message":content["message"]}))
+            
         await self.channel_layer.send(
-            receiver,
+            self.channel_name,
             {
             "type" : "chat.message",
             "receiver" :receiver,
-            "message":content["message"],
-            "date_sent":datetime.datetime.now()}
+            "message":content["message"]}
         )
+        print("sent")
 
     
     async def send_group(self,content):
@@ -51,8 +57,7 @@ class BaseClient(AsyncJsonWebsocketConsumer):
             receiver,
             {"type":"chat.message",
             "receiver":receiver,
-            "message":content["message"],
-            "date_sent":datetime.datetime.now()}
+            "message":content["message"]}
         )
 
     async def fetch_timeTable(self,content):
