@@ -15,6 +15,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+ROOT_URLONF='RealTimeChat.urls'
+
 
 # Application definition
 
@@ -54,7 +56,9 @@ TEMPLATES = [
     },
 ]
 
-ASGI_APPLICATION = 'RealTime.routing.application'
+WSGI_APPLICATION='RealTimeChat.wsgi.application'
+
+ASGI_APPLICATION = 'RealTimeChat.routing.application'
 
 
 # Database
