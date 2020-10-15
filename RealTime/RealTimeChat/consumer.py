@@ -4,7 +4,7 @@ import json
 import datetime
 from channels.layers import get_channel_layer
 
-class BaseClient(AsyncJsonWebsocketConsumer):
+class Student(AsyncJsonWebsocketConsumer):
     # class Client is our consumer for this connection
     # Tt manages the websocket connected to the server it also 
     # carries all methods we could apply to the connection
