@@ -1,0 +1,31 @@
+table,
+th,
+td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 15px;
+}
+
+.b {
+    background-color: black;
+}
+
+input {
+    border: none;
+    border-bottom: 2px solid gray;
+    text-align: center;
+}
+
+input:hover {
+    color: rgb(77, 96, 189);
+    border-bottom: 2px solid rgb(77, 96, 189);
+}
+
+input:focus {
+    color: orangered;
+    border-bottom: 2px solid rgb(77, 96, 189);
+}

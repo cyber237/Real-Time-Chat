@@ -13,21 +13,22 @@ SECRET_KEY = 'ke@*+1c%gd0b8xfd2=pfy%5$wls-e=l=1*sa=3he_%jnc=n*=6' # Will change 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["192.168.1.108"]
 
-ROOT_URLCONF='RealTimeChat.urls'
+
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'data',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'channels'
+    'channels',
 ]
 
 MIDDLEWARE = [
@@ -39,11 +40,11 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
+ROOT_URLCONF='RealTimeChat.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -62,10 +63,8 @@ ASGI_APPLICATION = 'RealTimeChat.routing.application'
 
 CHANNEL_LAYERS = {
     "default": {
-        "BACKEND": "channels_redis.core.RedisChannelLayer",
-        "CONFIG": {
-            "hosts": [("127.0.0.1", 6379)],
-        },
+        "BACKEND": "channels.layers.InMemoryChannelLayer",
+
     },
 }
 # Database

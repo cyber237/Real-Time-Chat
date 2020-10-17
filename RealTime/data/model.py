@@ -1,14 +1,5 @@
 from django.db import models
 
-
-class students_main_table(models.Model):
-    studentName = models.CharField(max_length=50)
-    department = models.CharField(max_length=20)
-    gender = models.CharField(max_length=10)
-    matricle = models.CharField(max_length=50)
-    phoneNumber = models.CharField(max_length=50)
-
-
 class admin(models.Model):
     username = models.CharField(max_length=20)
     name = models.CharField(max_length=30)
@@ -41,7 +32,7 @@ class Level(models.Model):
     speciality = models.ForeignKey(Speciality, on_delete=models.CASCADE)
     level = models.IntegerField()
     numOfStud = models.IntegerField()
-    timetable = models.CharField(max_length=200)
+    timetable = models.CharField(max_length=2200)
 
 
 class courseOffer(models.Model):

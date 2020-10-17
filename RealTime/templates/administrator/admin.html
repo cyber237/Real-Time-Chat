@@ -1,0 +1,36 @@
+{%load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{% static 'admin/admin.css' %}" rel="stylesheet">
+
+    <title>Admin TimeTable</title>
+    <script src="{% static 'admin/admin.js' %}"></script>
+    <script>
+        const connect = new WebSocket("ws://" + window.location.host + "/adminfonkou/timeTable/admin/");
+    </script>
+</head>
+
+<body>
+
+    <input type="text" placeholder="Department" id="department"><br>
+    <input type="text" placeholder="Program" id="program"><br>
+    <input type="text" placeholder="Specialty" id="specialty"><br>
+    <input type="text" placeholder="Level" id="level"><br>
+    <h4>Admin Time Table</h4>
+
+    <table id="admin-table">
+    </table>
+
+    <br>
+    <input type="button" value="To student" onclick="ToStudent(connect)">
+    <script> 
+        createAdminTable();
+    </script>
+
+</body>
+
+</html>

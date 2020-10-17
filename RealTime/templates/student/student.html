@@ -1,0 +1,43 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{% static 'student/student.css' %}" rel="stylesheet">
+
+    <title>Student TimeTable</title>
+    <script src="{% static 'student/student.js' %}"></script>
+</head>
+
+<body>
+
+    <h4>Student Time Table</h4><br><br>
+    <p style="display: none;" id="id">{{id}}</p>
+    <script>
+        var id = document.getElementById("id").innerHTML;
+        console.log(id);
+        const connection = new WebSocket("ws://" + window.location.host + "/" + id + "/timeTable/");
+        connection.onopen=function(e){
+            connection.send(JSON.stringify({"type":"request.timetable"}));
+        };
+        connection.onmessage=function(message){
+            var data1=JSON.parse(message.data);
+            if(String(data1["type"])=='update.timetable'){
+                console.log("re-unpack");
+                unpackData(data1);
+            }
+        };
+    </script>
+
+    <table id="student-table">
+    </table>
+    <script>
+        var id = document.getElementById("id").innerHTML;
+        console.log(id);
+        createStudentTable();
+    </script>
+</body>
+
+</html>

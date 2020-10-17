@@ -7,7 +7,8 @@ from . import consumer
 application=ProtocolTypeRouter({
     "websocket":AuthMiddlewareStack(
         URLRouter([
-            url(r'chat/(?P<id>\w+)/$',consumer.BaseClient)
+            url(r'(?P<id>\w+)/timeTable/$',consumer.Students),
+            url(r'(?P<id>\w+)/timeTable/admin/$',consumer.Administrator),
         ])
     )
 })

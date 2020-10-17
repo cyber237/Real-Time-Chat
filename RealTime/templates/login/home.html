@@ -1,0 +1,95 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up/ Sign In Page</title>
+    <!-- bootstrap stylesheet -->
+    <link rel="stylesheet" href="{% static 'node_modules/bs4/bootstrap.min.css' %}" />
+    <!-- font-awesome stylesheets -->
+    <link rel="stylesheet" href="{% static 'assets/font-awesome/css/fontawesome-all.min.css' %}" />
+
+    <link rel="stylesheet" href="{% static 'styles.css' %}" />
+
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- text section -->
+            <div class="col-md-5 p-5 text-center bg-primary text-white">
+                <h1 class="display-3">Sign up!</h1>
+                <p class="py-2">
+                    Keep up with the notifications, school calendar, timetable and schedule <br />
+                    <a href="#" class="text-white">
+                        <i> Find out more</i>
+                    </a>
+                </p>
+
+                <button class="btn btn-warning mb-2 text-white" id="account">
+            Create Account
+          </button>
+                <figure>
+                    <img src="{% static 'assets/images/vector.png' %}" class="img-fluid" style="height: 25rem" />
+                </figure>
+            </div>
+            <!-- form section -->
+            <div class="col-md-7 py-5">
+                <form action="{% url 'logging' %}" method="POST" name="form">
+                    {% csrf_token %} {%if errormessage%}
+                    <p id="p"></p>{% endif %}
+                    <h2 class="text-center text-primary mb-4">Welcome Back!</h2>
+                    <div class="input-container">
+                        <i class="fa fa-user icon"></i>
+                        <input class="input-field" type="text" placeholder="USERNAME" name="username" onfocus="functionch()" />
+                    </div>
+
+                    <div class="input-container">
+                        <i class="fa fa-key icon"></i>
+                        <input class="input-field" type="password" placeholder="PASSWORD" name="password" onfocus="functionch()" />
+                    </div>
+                    <div class="form-group form-check">
+                        <input type="checkbox" class="form-check-input" id="exampleCheck1" />
+                        <label class="form-check-label text-primary" for="exampleCheck1">Remeber me</label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {%if errormessage%}
+    <p style="display: none;" id="message">{{errormessage}}</p>
+    <script>
+        var message = document.getElementById("message").innerHTML;
+        var username = document.forms['form']['username'];
+        var password = document.forms['form']['password'];
+        if (message == "userdoesnotexist") {
+            username.value = "";
+            document.getElementsByClassName("input-container")[0].style.borderColor = "red";
+            password.value = "";
+            document.getElementsByClassName("input-container")[1].style.borderColor = "red";
+        } else if (message == "wrongpassword") {
+            password.value = "";
+            document.getElementsByClassName("input-container")[1].style.borderColor = "red";
+        }
+    </script>
+    {% endif %}
+    <script>
+        var password = document.forms['form']['password'];
+        var username = document.forms['form']['username'];
+
+        function functionch() {
+            document.getElementsByClassName("input-container")[0].style.borderColor = "#999";
+            document.getElementsByClassName("input-container")[1].style.borderColor = "#999";
+        }
+    </script>
+
+
+</body>
+
+</html>
